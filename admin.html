@@ -40,7 +40,7 @@ iframe{width:100%;height:72vh;border:1px solid var(--line);border-radius:10px;ma
 
 <div class="pane" id="p-pages">
 <div class="note">اختار الصفحة، وبعدين دوس على أي نص جواها وعدّله مباشرة، والحفظ بيتم تلقائي أول ما تطلع من المربع. ودوس على أي صورة (إطار أحمر) عشان تغيّرها. الأرقام العدّادة والروابط ما بتتعدلش من هنا.</div>
-<div class="row" style="margin-top:12px"><select id="pg" style="max-width:260px"></select><button class="btn gray" id="reload">تحديث المعاينة</button><button class="btn red" id="reset">استرجاع الصفحة للأصل</button><span class="msg" id="pm"></span></div>
+<div class="row" style="margin-top:12px"><select id="pg" style="max-width:260px"></select><button class="btn gray" id="reload">تحديث المعاينة</button><button class="btn" id="togal" type="button" hidden>إدارة صور الجاليري</button><button class="btn red" id="reset">استرجاع الصفحة للأصل</button><span class="msg" id="pm"></span></div>
 <iframe id="fr" title="preview"></iframe>
 <input type="file" id="imgf" accept="image/*" hidden>
 </div>
@@ -112,7 +112,8 @@ async function upload(file){
 
 /* ---------- page editor ---------- */
 function curPage(){return $('pg').value;}
-function loadFrame(){var p=curPage();$('fr').src=(p==='index'?'./':p+'.html')+'?cms=1';$('pm').textContent='';}
+function loadFrame(){var p=curPage();$('fr').src=(p==='index'?'./':p+'.html')+'?cms=1';$('pm').textContent='';$('togal').hidden=p!=='gallery';}
+$('togal').onclick=function(){document.querySelector('.tabs button[data-t="gal"]').click();};
 var pendingImg=null;
 window.addEventListener('message',async function(e){
   var m=e.data;if(!m||!m.ontic||e.origin!==location.origin)return;
