@@ -13,11 +13,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-</head>
+<script src="js/boot.js"></script></head>
 <body>
 <header><div class="wrap nav">
   <div class="logos"><a class="brand" href="./" aria-label="ONTiC home"><img src="img/brand/ontic-logo.png" alt="ONTiC, OncoThoracic International Cancer Association"></a></div>
-  <nav><a href="./" class=on>Home</a><a href="about.html">About</a><a href="program.html">Program</a><a href="speakers.html">Speakers</a><a href="venue.html">Venue & Travel</a><a href="partners.html">Partners</a><a href="gallery.html">Gallery</a><a href="contact.html">Contact</a><a class="btn btn-red" href="https://dataeventseg.com/r/ontic-2026">Register now</a></nav>
+  <nav><a href="./" class=on>Home</a><a href="about.html">About</a><a href="program.html">Program</a><a href="speakers.html">Speakers</a><a href="venue.html">Venue & Travel</a><a href="partners.html">Partners</a><a href="gallery.html">Gallery</a><a href="news.html">News</a><a href="contact.html">Contact</a><a class="btn btn-red" href="https://dataeventseg.com/r/ontic-2026">Register now</a></nav>
 </div></header>
 
 <main id="top">
@@ -88,9 +88,10 @@
 </div></section>
 </main>
 
+<section id="latest" data-nocms hidden></section>
 <footer><div class="wrap row"><div class="forg"><span>Congress Organizer</span><img src="img/brand/idea-logo.png" alt="IDEA"></div><div>&copy; 2026 OncoThoracic International Cancer Association. All rights reserved.<br>Website designed &amp; developed by <a href="https://ideaeg.online" target="_blank" rel="noopener">IDEA</a></div><div><a href="https://wa.me/201007770430">WhatsApp</a> &middot; <a href="https://www.facebook.com/share/1Cdbz6GnZb/">Facebook</a> &middot; <a href="https://www.instagram.com/onticegypt/">Instagram</a></div></div></footer>
 
-<script src="js/butterflies.js"></script>
+<script src="js/butterflies.js"></script><script src="js/site.js"></script>
 <script>
 (function(){
 var T=Date.UTC(2026,11,3,7,0,0);
@@ -99,7 +100,7 @@ function tick(){var s=Math.max(0,Math.floor((T-Date.now())/1000));
  document.getElementById('d').textContent=Math.floor(s/86400);document.getElementById('h').textContent=p(Math.floor(s%86400/3600));
  document.getElementById('m').textContent=p(Math.floor(s%3600/60));document.getElementById('s').textContent=p(s%60);}
 tick();setInterval(tick,1000);
-window.addEventListener('load',function(){window.startButterflies({base:'img/butterflies/',spread:true});});
+
 })();
 </script>
 </body>
