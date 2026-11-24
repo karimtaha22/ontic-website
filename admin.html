@@ -64,6 +64,7 @@ iframe{width:100%;height:72vh;border:1px solid var(--line);border-radius:10px;ma
 <div class="note">الشاشة اللي بتظهر لحظات أول ما الموقع يفتح. الافتراضي لوجو ONTiC. ممكن ترفع لوجو تاني (PNG شفاف أفضل).</div>
 <div class="row" style="margin-top:10px"><input type="file" id="llf" accept="image/*"><button class="btn gray" id="llx">رجّع الافتراضي</button></div>
 <img id="llp" class="prev" alt="" hidden>
+<h3>برنامج المؤتمر (PDF)</h3><div class="note">بيظهر في صفحة Program بزرار تحميل وزرار عرض أونلاين.</div><div class="row" style="margin-top:10px"><input type="file" id="ppf" accept="application/pdf,.pdf"><button class="btn gray" id="ppx" type="button">شيل الملف</button></div><div id="ppl" class="note"></div>
 <div class="msg" id="sm"></div>
 </div>
 </div>
@@ -188,10 +189,14 @@ async function loadSettings(){
   var r=await sb.from('ontic_settings').select('key,value');var S={};(r.data||[]).forEach(function(x){S[x.key]=x.value});
   $('bf').checked=S.butterflies!==false;
   if(S.loader_logo){$('llp').src=S.loader_logo;$('llp').hidden=false;}else $('llp').hidden=true;
+  var pl=$('ppl');if(S.program_pdf){pl.innerHTML='الملف الحالي: <a target="_blank" rel="noopener" href="'+S.program_pdf+'">فتح</a>';}else pl.textContent='مفيش ملف مرفوع.';
 }
 $('bf').onchange=async function(){var r=await setKey('butterflies',this.checked);if(r.error)toast('فشل: '+r.error.message,true);else toast(this.checked?'الفراشات شغالة':'الفراشات اتقفلت');};
 $('llf').onchange=async function(){var f=this.files[0];if(!f)return;try{toast('جاري الرفع...');var u=await upload(f);var r=await setKey('loader_logo',u);if(r.error)throw r.error;toast('تم تغيير لوجو التحميل ✓');loadSettings();}catch(e){toast('فشل: '+(e.message||e),true);}};
 $('llx').onclick=async function(){var r=await setKey('loader_logo','');if(r.error)toast('فشل',true);else{toast('رجع الافتراضي');$('llf').value='';loadSettings();}};
+
+$('ppf').onchange=async function(){var f=this.files[0];if(!f)return;try{toast('جاري رفع البرنامج...');var u=await upload(f);var r=await setKey('program_pdf',u);if(r.error)throw r.error;toast('تم رفع البرنامج ✓');this.value='';loadSettings();}catch(e){toast('فشل: '+(e.message||e),true);}};
+$('ppx').onclick=async function(){var r=await setKey('program_pdf','');if(r.error)toast('فشل',true);else{toast('اتشال الملف');loadSettings();}};
 
 enter();
 </script></body></html>
