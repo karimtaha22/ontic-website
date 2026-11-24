@@ -6,6 +6,7 @@
 button,input,select,textarea{font:inherit}
 .bar{background:var(--navy);color:#fff;padding:12px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .bar b{font-size:1.05rem}.bar .sp{flex:1}.bar button{background:transparent;border:1px solid #ffffff66;color:#fff;border-radius:8px;padding:6px 12px;cursor:pointer}
+.ggrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:16px}.gc{border:1px solid var(--line);border-radius:12px;padding:8px;background:#fff;display:flex;flex-direction:column;gap:8px}.gc img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px}
 .tabs{display:flex;gap:6px;padding:12px 18px 0;flex-wrap:wrap}.tabs button{border:1px solid var(--line);background:#fff;border-radius:10px 10px 0 0;padding:10px 18px;cursor:pointer;font-weight:600;color:var(--soft)}
 .tabs button.on{background:var(--blue);color:#fff;border-color:var(--blue)}
 .pane{background:#fff;margin:0 18px 18px;border:1px solid var(--line);border-radius:0 0 14px 14px;padding:18px}
@@ -35,7 +36,7 @@ iframe{width:100%;height:72vh;border:1px solid var(--line);border-radius:10px;ma
 
 <div id="app" hidden>
 <div class="bar"><b>ONTiC &mdash; لوحة التحكم</b><span class="sp"></span><a href="./" target="_blank" style="color:#fff">فتح الموقع</a><button id="out">خروج</button></div>
-<div class="tabs"><button data-t="pages" class="on">تعديل الصفحات</button><button data-t="posts">البوستات</button><button data-t="set">الإعدادات</button></div>
+<div class="tabs"><button data-t="pages" class="on">تعديل الصفحات</button><button data-t="posts">البوستات</button><button data-t="gal">الجاليري</button><button data-t="set">الإعدادات</button></div>
 
 <div class="pane" id="p-pages">
 <div class="note">اختار الصفحة، وبعدين دوس على أي نص جواها وعدّله مباشرة، والحفظ بيتم تلقائي أول ما تطلع من المربع. ودوس على أي صورة (إطار أحمر) عشان تغيّرها. الأرقام العدّادة والروابط ما بتتعدلش من هنا.</div>
@@ -55,6 +56,7 @@ iframe{width:100%;height:72vh;border:1px solid var(--line);border-radius:10px;ma
 <div class="row" style="margin-top:12px"><button class="btn" id="psave">حفظ البوست</button><button class="btn gray" id="pnew">بوست جديد</button></div><div class="msg" id="pmsg"></div>
 </div></div></div>
 
+<div class="pane" id="p-gal" hidden><h3 style="margin-top:0">صور الجاليري (بتظهر في السلايدر وفي الشبكة)</h3><div class="row"><input type="file" id="gf" accept="image/*" multiple><button class="btn" id="gup" type="button">رفع الصور</button></div><div class="msg" id="gm"></div><div id="glist" class="ggrid"></div></div>
 <div class="pane" id="p-set" hidden>
 <h3 style="margin-top:0">الفراشات</h3>
 <label style="display:flex;gap:8px;align-items:center;font-size:1.05rem"><input type="checkbox" id="bf"> تشغيل الفراشات الطايرة على الموقع</label>
@@ -93,10 +95,10 @@ function init(){
   if(inited)return;inited=true;
   document.querySelectorAll('.tabs button').forEach(function(b){b.onclick=function(){
     document.querySelectorAll('.tabs button').forEach(function(x){x.classList.toggle('on',x===b)});
-    ['pages','posts','set'].forEach(function(k){$('p-'+k).hidden=k!==b.dataset.t});};});
+    ['pages','posts','gal','set'].forEach(function(k){$('p-'+k).hidden=k!==b.dataset.t});};});
   $('pg').innerHTML=PAGES.map(function(p){return '<option value="'+p[0]+'">'+p[1]+'</option>'}).join('');
   $('pg').onchange=loadFrame;$('reload').onclick=loadFrame;loadFrame();
-  loadPosts();loadSettings();
+  loadPosts();loadSettings();loadGal();
 }
 
 /* ---------- upload ---------- */
@@ -164,6 +166,19 @@ $('psave').onclick=async function(){
   var r=editing?await sb.from('ontic_posts').update(row).eq('id',editing):await sb.from('ontic_posts').insert(row);
   if(r.error){$('pmsg').className='msg err';$('pmsg').textContent='فشل: '+r.error.message;return;}
   toast('تم حفظ البوست ✓');newPost();loadPosts();
+};
+
+/* ---------- gallery ---------- */
+async function loadGal(){
+  var r=await sb.from('ontic_gallery').select('*').order('created_at',{ascending:false});var L=r.data||[];
+  $('glist').innerHTML=L.length?L.map(function(x){return '<div class="gc"><img src="'+x.image_url+'" alt=""><button class="btn red" data-gd="'+x.id+'">حذف</button></div>'}).join(''):'<div class="note">مفيش صور مرفوعة لسه (الصور الأصلية للموقع هتفضل موجودة).</div>';
+  document.querySelectorAll('[data-gd]').forEach(function(b){b.onclick=async function(){if(!confirm('تحذف الصورة دي؟'))return;var d=await sb.from('ontic_gallery').delete().eq('id',+b.dataset.gd);if(d.error)toast('فشل: '+d.error.message,true);else{toast('اتحذفت');loadGal();}};});
+}
+$('gup').onclick=async function(){
+  var fs=[].slice.call($('gf').files);if(!fs.length){toast('اختار صور الأول',true);return;}
+  try{var n=0;for(var f of fs){$('gm').textContent='جاري رفع '+(++n)+' من '+fs.length+'...';var u=await upload(f);var r=await sb.from('ontic_gallery').insert({image_url:u});if(r.error)throw r.error;}
+    $('gm').textContent='';$('gf').value='';toast('تم رفع '+fs.length+' صورة ✓');loadGal();
+  }catch(e){$('gm').textContent='';toast('فشل: '+(e.message||e),true);}
 };
 
 /* ---------- settings ---------- */
