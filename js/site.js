@@ -6,6 +6,9 @@ function api(q){return fetch(U+'/rest/v1/'+q,{headers:{apikey:K,Authorization:'B
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(m){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]})}
 function norm(h){return h.replace(/\s+/g,' ').trim();}
 
+/* ---- congress banner above footer ---- */
+(function(){var f=document.querySelector('body>footer');if(!f||document.querySelector('.congress-footer'))return;var w=document.createElement('div');w.className='congress-footer';w.setAttribute('data-nocms','');w.style.cssText='margin:0;background:#bfe0f3;line-height:0';w.innerHTML='<picture><source media="(max-width: 767px)" srcset="img/brand/footer-mobile-750x700.jpg" width="750" height="700"><img src="img/brand/footer-desktop-1920x340.jpg" width="1920" height="340" loading="lazy" alt="Best of Lung Cancer Congresses, 3-4 December 2026, Marriott Zamalek, Cairo, Egypt. On-TC and The James, Ohio State University Comprehensive Cancer Center." style="display:block;width:100%;height:auto;max-width:1920px;margin:0 auto"></picture>';f.parentNode.insertBefore(w,f);})();
+
 /* ---- mobile menu ---- */
 (function(){var n=document.querySelector('.nav nav');if(!n)return;var b=document.createElement('button');b.type='button';b.className='nb';b.setAttribute('aria-label','Menu');b.setAttribute('aria-expanded','false');b.innerHTML='<i></i><i></i><i></i>';n.parentNode.insertBefore(b,n);b.onclick=function(){var o=n.classList.toggle('open');b.classList.toggle('on',o);b.setAttribute('aria-expanded',String(o));};n.addEventListener('click',function(e){if(e.target.closest('a')){n.classList.remove('open');b.classList.remove('on');}});})();
 
