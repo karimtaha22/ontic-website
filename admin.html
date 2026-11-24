@@ -36,7 +36,7 @@ iframe{width:100%;height:72vh;border:1px solid var(--line);border-radius:10px;ma
 
 <div id="app" hidden>
 <div class="bar"><b>ONTiC &mdash; لوحة التحكم</b><span class="sp"></span><a href="./" target="_blank" style="color:#fff">فتح الموقع</a><button id="out">خروج</button></div>
-<div class="tabs"><button data-t="pages" class="on">تعديل الصفحات</button><button data-t="posts">البوستات</button><button data-t="gal">الجاليري</button><button data-t="set">الإعدادات</button></div>
+<div class="tabs"><button data-t="pages" class="on">تعديل الصفحات</button><button data-t="posts">البوستات</button><button data-t="gal">الجاليري</button><button data-t="vid">الفيديو</button><button data-t="set">الإعدادات</button></div>
 
 <div class="pane" id="p-pages">
 <div class="note">اختار الصفحة، وبعدين دوس على أي نص جواها وعدّله مباشرة، والحفظ بيتم تلقائي أول ما تطلع من المربع. ودوس على أي صورة (إطار أحمر) عشان تغيّرها. الأرقام العدّادة والروابط ما بتتعدلش من هنا.</div>
@@ -57,6 +57,7 @@ iframe{width:100%;height:72vh;border:1px solid var(--line);border-radius:10px;ma
 </div></div></div>
 
 <div class="pane" id="p-gal" hidden><h3 style="margin-top:0">صور الجاليري (بتظهر في السلايدر وفي الشبكة)</h3><div class="row"><input type="file" id="gf" accept="image/*" multiple><button class="btn" id="gup" type="button">رفع الصور</button></div><div class="msg" id="gm"></div><div id="glist" class="ggrid"></div></div>
+<div class="pane" id="p-vid" hidden><h3 style="margin-top:0">فيديو الصفحة الرئيسية</h3><div class="note">ارفع فيديو MP4 (الأفضل أقل من 50 ميجا). بيظهر في الصفحة الرئيسية، وتقدر تطلعه أو تنزله بالأسهم.</div><div class="row" style="margin-top:10px"><input type="file" id="vf" accept="video/*"><button class="btn gray" id="vx" type="button">شيل الفيديو</button></div><div id="vs" class="note"></div><video id="vp" controls playsinline style="max-width:420px;width:100%;margin-top:10px;border-radius:12px" hidden></video><h3>مكان الفيديو في الصفحة</h3><div class="row"><button class="btn" id="vup" type="button">▲ اطلع</button><button class="btn" id="vdn" type="button">▼ انزل</button><b id="vpos"></b></div></div>
 <div class="pane" id="p-set" hidden>
 <h3 style="margin-top:0">الفراشات</h3>
 <label style="display:flex;gap:8px;align-items:center;font-size:1.05rem"><input type="checkbox" id="bf"> تشغيل الفراشات الطايرة على الموقع</label>
@@ -96,7 +97,7 @@ function init(){
   if(inited)return;inited=true;
   document.querySelectorAll('.tabs button').forEach(function(b){b.onclick=function(){
     document.querySelectorAll('.tabs button').forEach(function(x){x.classList.toggle('on',x===b)});
-    ['pages','posts','gal','set'].forEach(function(k){$('p-'+k).hidden=k!==b.dataset.t});};});
+    ['pages','posts','gal','vid','set'].forEach(function(k){$('p-'+k).hidden=k!==b.dataset.t});};});
   $('pg').innerHTML=PAGES.map(function(p){return '<option value="'+p[0]+'">'+p[1]+'</option>'}).join('');
   $('pg').onchange=loadFrame;$('reload').onclick=loadFrame;loadFrame();
   loadPosts();loadSettings();loadGal();
@@ -183,12 +184,21 @@ $('gup').onclick=async function(){
   }catch(e){$('gm').textContent='';toast('فشل: '+(e.message||e),true);}
 };
 
+/* ---------- home video ---------- */
+var VSL=['في أول الصفحة (فوق كل حاجة)','بعد الصورة والعدادات (القسم الرئيسي)','بعد About','بعد Program','بعد Why attend','بعد Venue','بعد Organizers','بعد الجاليري (Moments)','في آخر الصفحة (بعد Join us)'],vurl='',vpos=1;
+function vshow(){$('vpos').textContent=VSL[vpos]||'';if(vurl){$('vp').src=vurl;$('vp').hidden=false;$('vs').textContent='';}else{$('vp').removeAttribute('src');$('vp').hidden=true;$('vs').textContent='مفيش فيديو مرفوع.';}}
+$('vf').onchange=async function(){var f=this.files[0];if(!f)return;try{toast('جاري رفع الفيديو...');var u=await upload(f);var r=await setKey('home_video',u);if(r.error)throw r.error;toast('تم رفع الفيديو ✓');this.value='';loadSettings();}catch(e){toast('فشل: '+(e.message||e),true);}};
+$('vx').onclick=async function(){var r=await setKey('home_video','');if(r.error)toast('فشل',true);else{toast('اتشال الفيديو');loadSettings();}};
+async function vmove(d){var n=Math.min(8,Math.max(0,vpos+d));if(n===vpos)return;var r=await setKey('home_video_pos',n);if(r.error){toast('فشل',true);return;}vpos=n;vshow();toast('اتغير مكان الفيديو ✓');}
+$('vup').onclick=function(){vmove(-1)};$('vdn').onclick=function(){vmove(1)};
+
 /* ---------- settings ---------- */
 async function setKey(k,v){return sb.from('ontic_settings').upsert({key:k,value:v,updated_at:new Date().toISOString()});}
 async function loadSettings(){
   var r=await sb.from('ontic_settings').select('key,value');var S={};(r.data||[]).forEach(function(x){S[x.key]=x.value});
   $('bf').checked=S.butterflies!==false;
   if(S.loader_logo){$('llp').src=S.loader_logo;$('llp').hidden=false;}else $('llp').hidden=true;
+  vurl=S.home_video||'';vpos=typeof S.home_video_pos==='number'?Math.min(8,Math.max(0,S.home_video_pos)):1;vshow();
   var pl=$('ppl');if(S.program_pdf){pl.innerHTML='الملف الحالي: <a target="_blank" rel="noopener" href="'+S.program_pdf+'">فتح</a>';}else pl.textContent='مفيش ملف مرفوع.';
 }
 $('bf').onchange=async function(){var r=await setKey('butterflies',this.checked);if(r.error)toast('فشل: '+r.error.message,true);else toast(this.checked?'الفراشات شغالة':'الفراشات اتقفلت');};
