@@ -1,0 +1,181 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>ONTiC Admin</title><link rel="icon" href="favicon.svg">
+<style>
+:root{--navy:#14305f;--blue:#1580bb;--line:#d3e6f2;--bg:#f3f8fc;--red:#c8222b;--ok:#1a8a4a;--ink:#0f2038;--soft:#4a5d73}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;background:var(--bg);color:var(--ink)}
+button,input,select,textarea{font:inherit}
+.bar{background:var(--navy);color:#fff;padding:12px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.bar b{font-size:1.05rem}.bar .sp{flex:1}.bar button{background:transparent;border:1px solid #ffffff66;color:#fff;border-radius:8px;padding:6px 12px;cursor:pointer}
+.tabs{display:flex;gap:6px;padding:12px 18px 0;flex-wrap:wrap}.tabs button{border:1px solid var(--line);background:#fff;border-radius:10px 10px 0 0;padding:10px 18px;cursor:pointer;font-weight:600;color:var(--soft)}
+.tabs button.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.pane{background:#fff;margin:0 18px 18px;border:1px solid var(--line);border-radius:0 0 14px 14px;padding:18px}
+.login{max-width:380px;margin:12vh auto;background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px}
+.login h1{margin:0 0 16px;font-size:1.3rem;color:var(--navy)}
+label{display:block;margin:10px 0 4px;font-weight:600;font-size:.92rem}
+input[type=text],input[type=password],input[type=email],input[type=url],select,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;background:#fff}
+textarea{min-height:140px;resize:vertical}
+.btn{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:10px 18px;cursor:pointer;font-weight:600}.btn.red{background:var(--red)}.btn.gray{background:#e5eef5;color:var(--ink)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.msg{margin-top:10px;font-size:.92rem;min-height:1.2em}.err{color:var(--red)}.good{color:var(--ok)}
+.note{background:#eef8fd;border:1px solid var(--line);border-radius:10px;padding:10px 14px;color:var(--soft);font-size:.92rem;line-height:1.7}
+iframe{width:100%;height:72vh;border:1px solid var(--line);border-radius:10px;margin-top:12px;background:#fff}
+.post{display:flex;gap:12px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:8px}
+.post img{width:70px;height:50px;object-fit:cover;border-radius:6px;background:#eee}.post .t{flex:1;min-width:0}.post .t b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.post .t small{color:var(--soft)}
+.tag{font-size:.75rem;border-radius:20px;padding:2px 9px;background:#e5f6ec;color:var(--ok)}.tag.off{background:#f1f1f1;color:#777}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}@media(max-width:800px){.grid{grid-template-columns:1fr}}
+#toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 20px;border-radius:10px;opacity:0;transition:opacity .3s;pointer-events:none}#toast.on{opacity:1}
+.prev{max-width:240px;max-height:140px;border:1px solid var(--line);border-radius:8px;margin-top:8px;display:block}
+[hidden]{display:none!important}
+</style></head><body>
+
+<div id="login" class="login"><h1>دخول لوحة تحكم ONTiC</h1>
+<form id="lf"><label>الإيميل أو رقم الموبايل</label><input type="text" id="em" autocomplete="username" required>
+<label>كلمة السر</label><input type="password" id="pw" autocomplete="current-password" required>
+<div style="margin-top:14px"><button class="btn" type="submit">دخول</button></div><div class="msg err" id="lm"></div></form></div>
+
+<div id="app" hidden>
+<div class="bar"><b>ONTiC &mdash; لوحة التحكم</b><span class="sp"></span><a href="./" target="_blank" style="color:#fff">فتح الموقع</a><button id="out">خروج</button></div>
+<div class="tabs"><button data-t="pages" class="on">تعديل الصفحات</button><button data-t="posts">البوستات</button><button data-t="set">الإعدادات</button></div>
+
+<div class="pane" id="p-pages">
+<div class="note">اختار الصفحة، وبعدين دوس على أي نص جواها وعدّله مباشرة، والحفظ بيتم تلقائي أول ما تطلع من المربع. ودوس على أي صورة (إطار أحمر) عشان تغيّرها. الأرقام العدّادة والروابط ما بتتعدلش من هنا.</div>
+<div class="row" style="margin-top:12px"><select id="pg" style="max-width:260px"></select><button class="btn gray" id="reload">تحديث المعاينة</button><button class="btn red" id="reset">استرجاع الصفحة للأصل</button><span class="msg" id="pm"></span></div>
+<iframe id="fr" title="preview"></iframe>
+<input type="file" id="imgf" accept="image/*" hidden>
+</div>
+
+<div class="pane" id="p-posts" hidden><div class="grid">
+<div><h3 style="margin-top:0">كل البوستات</h3><div id="plist"></div></div>
+<div><h3 style="margin-top:0" id="pft">بوست جديد</h3>
+<label>العنوان</label><input type="text" id="pt">
+<label>النص</label><textarea id="pb"></textarea>
+<label>صورة (اختياري)</label><div class="row"><input type="file" id="pimgf" accept="image/*"><button class="btn gray" id="pimgx" type="button">شيل الصورة</button></div>
+<img id="pimgp" class="prev" hidden alt="">
+<label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="pp" checked> منشور (ظاهر في الموقع)</label>
+<div class="row" style="margin-top:12px"><button class="btn" id="psave">حفظ البوست</button><button class="btn gray" id="pnew">بوست جديد</button></div><div class="msg" id="pmsg"></div>
+</div></div></div>
+
+<div class="pane" id="p-set" hidden>
+<h3 style="margin-top:0">الفراشات</h3>
+<label style="display:flex;gap:8px;align-items:center;font-size:1.05rem"><input type="checkbox" id="bf"> تشغيل الفراشات الطايرة على الموقع</label>
+<h3>لوجو شاشة التحميل</h3>
+<div class="note">الشاشة اللي بتظهر لحظات أول ما الموقع يفتح. الافتراضي لوجو ONTiC. ممكن ترفع لوجو تاني (PNG شفاف أفضل).</div>
+<div class="row" style="margin-top:10px"><input type="file" id="llf" accept="image/*"><button class="btn gray" id="llx">رجّع الافتراضي</button></div>
+<img id="llp" class="prev" alt="" hidden>
+<div class="msg" id="sm"></div>
+</div>
+</div>
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+var URL_='https://qqdqkpdclkvppdilbjdg.supabase.co',KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFxZHFrcGRjbGt2cHBkaWxiamRnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYyODI0ODAsImV4cCI6MjEwMTg1ODQ4MH0.UV7ejhUMy7S4ayUonwpRDK3QfbgaAMy-6x42MYyE3cE';
+var sb=window.supabase.createClient(URL_,KEY);
+var $=function(i){return document.getElementById(i)};
+function toast(t,bad){var e=$('toast');e.textContent=t;e.style.background=bad?'#c8222b':'#14305f';e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(function(){e.classList.remove('on')},2200);}
+function toEmail(v){v=(v||'').trim();if(v.indexOf('@')>-1)return v;var d=v.replace(/\D/g,'');return 'staff-'+d+'@staff.ideaeg.online';}
+var PAGES=[['index','الرئيسية'],['about','About'],['program','Program'],['speakers','Speakers'],['venue','Venue & Travel'],['partners','Partners'],['gallery','Gallery'],['news','News'],['contact','Contact']];
+
+async function enter(){
+  var u=(await sb.auth.getUser()).data.user;
+  if(!u){$('login').hidden=false;$('app').hidden=true;return;}
+  var a=await sb.rpc('is_admin');
+  if(!a.data){await sb.auth.signOut();$('lm').textContent='الحساب ده مش أدمن';$('login').hidden=false;$('app').hidden=true;return;}
+  $('login').hidden=true;$('app').hidden=false;init();
+}
+$('lf').onsubmit=async function(e){e.preventDefault();$('lm').textContent='';
+  var r=await sb.auth.signInWithPassword({email:toEmail($('em').value),password:$('pw').value});
+  if(r.error){$('lm').textContent='بيانات الدخول غلط';return;}enter();};
+$('out').onclick=async function(){await sb.auth.signOut();location.reload();};
+
+var inited=false;
+function init(){
+  if(inited)return;inited=true;
+  document.querySelectorAll('.tabs button').forEach(function(b){b.onclick=function(){
+    document.querySelectorAll('.tabs button').forEach(function(x){x.classList.toggle('on',x===b)});
+    ['pages','posts','set'].forEach(function(k){$('p-'+k).hidden=k!==b.dataset.t});};});
+  $('pg').innerHTML=PAGES.map(function(p){return '<option value="'+p[0]+'">'+p[1]+'</option>'}).join('');
+  $('pg').onchange=loadFrame;$('reload').onclick=loadFrame;loadFrame();
+  loadPosts();loadSettings();
+}
+
+/* ---------- upload ---------- */
+async function upload(file){
+  var ext=(file.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'');
+  var path='ontic/'+Date.now()+'-'+Math.random().toString(36).slice(2,7)+'.'+ext;
+  var r=await sb.storage.from('website-media').upload(path,file,{contentType:file.type,upsert:false});
+  if(r.error)throw r.error;
+  return URL_+'/storage/v1/object/public/website-media/'+path;
+}
+
+/* ---------- page editor ---------- */
+function curPage(){return $('pg').value;}
+function loadFrame(){var p=curPage();$('fr').src=(p==='index'?'./':p+'.html')+'?cms=1';$('pm').textContent='';}
+var pendingImg=null;
+window.addEventListener('message',async function(e){
+  var m=e.data;if(!m||!m.ontic||e.origin!==location.origin)return;
+  if(m.t==='text'){
+    var r=m.val==null
+      ?await sb.from('ontic_text').delete().eq('page',m.page).eq('orig',m.orig)
+      :await sb.from('ontic_text').upsert({page:m.page,orig:m.orig,val:m.val,kind:'text',updated_at:new Date().toISOString()});
+    if(r.error)toast('فشل الحفظ: '+r.error.message,true);else toast('تم الحفظ ✓');
+  }
+  if(m.t==='img'){pendingImg=m;$('imgf').value='';$('imgf').click();}
+});
+$('imgf').onchange=async function(){
+  var f=this.files[0];if(!f||!pendingImg)return;var m=pendingImg;pendingImg=null;
+  try{toast('جاري رفع الصورة...');var url=await upload(f);
+    var r=await sb.from('ontic_text').upsert({page:m.page,orig:m.orig,val:url,kind:'img',updated_at:new Date().toISOString()});
+    if(r.error)throw r.error;
+    $('fr').contentWindow.postMessage({ontic:1,page:m.page,t:'setimg',orig:m.orig,url:url},'*');toast('تم تغيير الصورة ✓');
+  }catch(err){toast('فشل: '+(err.message||err),true);}
+};
+$('reset').onclick=async function(){
+  if(!confirm('تمسح كل التعديلات على الصفحة دي وترجّعها للأصل؟'))return;
+  var r=await sb.from('ontic_text').delete().eq('page',curPage());
+  if(r.error)toast('فشل: '+r.error.message,true);else{toast('اترجعت للأصل');loadFrame();}
+};
+
+/* ---------- posts ---------- */
+var P=[],editing=null,pimg=null;
+function fmt(d){try{return new Date(d).toLocaleDateString('en-GB')}catch(e){return ''}}
+async function loadPosts(){
+  var r=await sb.from('ontic_posts').select('*').order('created_at',{ascending:false});
+  P=r.data||[];
+  $('plist').innerHTML=P.length?P.map(function(p){return '<div class="post">'+(p.image_url?'<img src="'+p.image_url+'" alt="">':'<img alt="">')+
+   '<div class="t"><b></b><small>'+fmt(p.created_at)+' <span class="tag'+(p.published?'':' off')+'">'+(p.published?'منشور':'مخفي')+'</span></small></div>'+
+   '<button class="btn gray" data-e="'+p.id+'">تعديل</button><button class="btn red" data-d="'+p.id+'">حذف</button></div>';}).join(''):'<div class="note">مفيش بوستات لسه.</div>';
+  var bs=document.querySelectorAll('#plist .post .t b');P.forEach(function(p,i){bs[i].textContent=p.title;});
+  document.querySelectorAll('[data-e]').forEach(function(b){b.onclick=function(){editPost(+b.dataset.e)}});
+  document.querySelectorAll('[data-d]').forEach(function(b){b.onclick=async function(){
+    if(!confirm('تحذف البوست ده نهائي؟'))return;
+    var r=await sb.from('ontic_posts').delete().eq('id',+b.dataset.d);
+    if(r.error)toast('فشل: '+r.error.message,true);else{toast('اتحذف');if(editing===+b.dataset.d)newPost();loadPosts();}};});
+}
+function showImg(){var i=$('pimgp');if(pimg){i.src=pimg;i.hidden=false;}else i.hidden=true;}
+function newPost(){editing=null;pimg=null;$('pft').textContent='بوست جديد';$('pt').value='';$('pb').value='';$('pp').checked=true;$('pimgf').value='';$('pmsg').textContent='';showImg();}
+function editPost(id){var p=P.filter(function(x){return x.id===id})[0];if(!p)return;editing=id;pimg=p.image_url||null;$('pft').textContent='تعديل بوست';$('pt').value=p.title;$('pb').value=p.body;$('pp').checked=p.published;$('pimgf').value='';showImg();window.scrollTo(0,0);}
+$('pnew').onclick=newPost;
+$('pimgx').onclick=function(){pimg=null;$('pimgf').value='';showImg();};
+$('pimgf').onchange=async function(){var f=this.files[0];if(!f)return;try{toast('جاري رفع الصورة...');pimg=await upload(f);showImg();toast('تم رفع الصورة ✓');}catch(e){toast('فشل: '+(e.message||e),true);}};
+$('psave').onclick=async function(){
+  var t=$('pt').value.trim();if(!t){$('pmsg').className='msg err';$('pmsg').textContent='اكتب العنوان';return;}
+  var row={title:t,body:$('pb').value,image_url:pimg,published:$('pp').checked};
+  var r=editing?await sb.from('ontic_posts').update(row).eq('id',editing):await sb.from('ontic_posts').insert(row);
+  if(r.error){$('pmsg').className='msg err';$('pmsg').textContent='فشل: '+r.error.message;return;}
+  toast('تم حفظ البوست ✓');newPost();loadPosts();
+};
+
+/* ---------- settings ---------- */
+async function setKey(k,v){return sb.from('ontic_settings').upsert({key:k,value:v,updated_at:new Date().toISOString()});}
+async function loadSettings(){
+  var r=await sb.from('ontic_settings').select('key,value');var S={};(r.data||[]).forEach(function(x){S[x.key]=x.value});
+  $('bf').checked=S.butterflies!==false;
+  if(S.loader_logo){$('llp').src=S.loader_logo;$('llp').hidden=false;}else $('llp').hidden=true;
+}
+$('bf').onchange=async function(){var r=await setKey('butterflies',this.checked);if(r.error)toast('فشل: '+r.error.message,true);else toast(this.checked?'الفراشات شغالة':'الفراشات اتقفلت');};
+$('llf').onchange=async function(){var f=this.files[0];if(!f)return;try{toast('جاري الرفع...');var u=await upload(f);var r=await setKey('loader_logo',u);if(r.error)throw r.error;toast('تم تغيير لوجو التحميل ✓');loadSettings();}catch(e){toast('فشل: '+(e.message||e),true);}};
+$('llx').onclick=async function(){var r=await setKey('loader_logo','');if(r.error)toast('فشل',true);else{toast('رجع الافتراضي');$('llf').value='';loadSettings();}};
+
+enter();
+</script></body></html>
