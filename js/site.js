@@ -6,6 +6,9 @@ function api(q){return fetch(U+'/rest/v1/'+q,{headers:{apikey:K,Authorization:'B
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(m){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]})}
 function norm(h){return h.replace(/\s+/g,' ').trim();}
 
+/* ---- mobile menu ---- */
+(function(){var n=document.querySelector('.nav nav');if(!n)return;var b=document.createElement('button');b.type='button';b.className='nb';b.setAttribute('aria-label','Menu');b.setAttribute('aria-expanded','false');b.innerHTML='<i></i><i></i><i></i>';n.parentNode.insertBefore(b,n);b.onclick=function(){var o=n.classList.toggle('open');b.classList.toggle('on',o);b.setAttribute('aria-expanded',String(o));};n.addEventListener('click',function(e){if(e.target.closest('a')){n.classList.remove('open');b.classList.remove('on');}});})();
+
 /* ---- tabs (program page) ---- */
 document.querySelectorAll('[data-tabs]').forEach(function(w){
   var bs=w.querySelectorAll('.tabs button'),ps=w.querySelectorAll('[data-pane]');
