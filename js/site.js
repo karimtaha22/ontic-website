@@ -76,7 +76,7 @@ function card(p){
 }
 function css(){
   var s=document.createElement('style');
-  s.textContent='.ops{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:22px}.op{background:#fff;border:1px solid var(--line,#d3e6f2);border-radius:18px;overflow:hidden;box-shadow:0 8px 24px rgba(20,48,95,.07)}.op img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}.opb{padding:18px 20px 22px}.opb time{font-size:.8rem;color:var(--soft,#4a5d73)}.opb h3{margin:6px 0 8px;font-size:1.2rem;color:var(--navy,#14305f)}.opb p{margin:0;line-height:1.65;color:var(--ink,#0f2038)}#latest{padding:10px 22px 46px}#latest h2{margin:0 0 18px}#latest .more{margin-top:18px;display:inline-block}[contenteditable]{outline:1px dashed rgba(21,128,187,.45);outline-offset:2px;cursor:text}[contenteditable]:focus{outline:2px solid #1580bb;background:rgba(21,128,187,.07)}img.cms-i{outline:2px dashed #c8222b;outline-offset:-2px;cursor:pointer}';
+  s.textContent='.ops{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:22px}.op{background:#fff;border:1px solid var(--line,#d3e6f2);border-radius:18px;overflow:hidden;box-shadow:0 8px 24px rgba(20,48,95,.07)}.op img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}.opb{padding:18px 20px 22px}.opb time{font-size:.8rem;color:var(--soft,#4a5d73)}.opb h3{margin:6px 0 8px;font-size:1.2rem;color:var(--navy,#14305f)}.opb p{margin:0;line-height:1.65;color:var(--ink,#0f2038)}#latest{padding:10px 22px 46px}#latest h2{margin:0 0 18px}#latest .more{margin-top:18px;display:inline-block}[contenteditable]{outline:1px dashed rgba(21,128,187,.45);outline-offset:2px;cursor:text}[contenteditable]:focus{outline:2px solid #1580bb;background:rgba(21,128,187,.07)}img.cms-i{outline:2px dashed #c8222b;outline-offset:-2px;cursor:pointer}.stats{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin:30px auto 8px;max-width:900px}.stats div{flex:1;min-width:130px;background:#fff;border:1px solid var(--line,#d3e6f2);border-radius:16px;padding:16px 10px;box-shadow:0 8px 22px rgba(29,63,122,.08)}.stats b{display:block;font-family:"Plus Jakarta Sans",sans-serif;font-size:2.1rem;line-height:1.1;color:var(--navy,#14305f)}.stats small{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--soft,#4a5d73)}.pdfc{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;background:#fff;border:1px solid var(--line,#d3e6f2);border-radius:18px;padding:18px 22px;margin:0 0 22px;box-shadow:0 8px 24px rgba(20,48,95,.07)}.pdfc b{display:block;color:var(--navy,#14305f);font-size:1.1rem}.pdfc span{color:var(--soft,#4a5d73);font-size:.92rem}.pdfa{display:flex;gap:10px;flex-wrap:wrap}.pdff{width:100%;height:80vh;border:1px solid var(--line,#d3e6f2);border-radius:14px;margin:0 0 22px;background:#fff}';
   document.head.appendChild(s);
 }
 function posts(list){
@@ -119,8 +119,12 @@ function editMode(){
   send({t:'ready'});
 }
 
+/* ---- stats + program file ---- */
+function counters(){var els=document.querySelectorAll('[data-n]');if(!els.length)return;els.forEach(function(e){var to=+e.dataset.n,t0=null;function st(ts){if(t0===null)t0=ts;var p=Math.min(1,(ts-t0)/1600);e.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(st);}requestAnimationFrame(st);});}
+function pdf(u){var b=document.getElementById('pdfbox');if(!b||!u||!/^https:\/\//.test(u))return;b.innerHTML='<div class="pdfc"><div><b>Official program</b><span>Download the full scientific program or view it online.</span></div><div class="pdfa"><a class="btn btn-red" href="'+esc(u)+'" target="_blank" rel="noopener" download>Download program</a><button class="btn btn-ghost" type="button" id="pdfv">View online</button></div></div>';b.hidden=false;document.getElementById('pdfv').onclick=function(){var f=document.getElementById('pdff');if(f){f.remove();this.textContent='View online';return;}f=document.createElement('iframe');f.id='pdff';f.className='pdff';f.title='Program';f.src=u;b.appendChild(f);this.textContent='Hide';};}
+
 /* ---- boot ---- */
-css();
+css();setTimeout(counters,1200);
 var needPosts=!!(document.getElementById('posts')||document.getElementById('latest'));
 Promise.all([
   api('ontic_settings?select=key,value'),
@@ -130,7 +134,7 @@ Promise.all([
   var S={};r[0].forEach(function(x){S[x.key]=x.value;});
   try{if(S.loader_logo&&/^https:\/\//.test(S.loader_logo))localStorage.setItem('ontic_ll',S.loader_logo);else localStorage.removeItem('ontic_ll');}catch(e){}
   applyText(r[1]||[]);
-  posts(r[2]||[]);
+  posts(r[2]||[]);pdf(S.program_pdf);
   if(EDIT)editMode();
   else butterflies(S.butterflies!==false);
   window.__onticReady=true;
