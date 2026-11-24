@@ -126,6 +126,8 @@ function editMode(){
 function counters(){var els=document.querySelectorAll('[data-n]');if(!els.length)return;els.forEach(function(e){var to=+e.dataset.n,t0=null;function st(ts){if(t0===null)t0=ts;var p=Math.min(1,(ts-t0)/1600);e.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(st);}requestAnimationFrame(st);});}
 function pdf(u){var b=document.getElementById('pdfbox');if(!b||!u||!/^https:\/\//.test(u))return;b.innerHTML='<div class="pdfc"><div><b>Official program</b><span>Download the full scientific program or view it online.</span></div><div class="pdfa"><a class="btn btn-red" href="'+esc(u)+'" target="_blank" rel="noopener" download>Download program</a><button class="btn btn-ghost" type="button" id="pdfv">View online</button></div></div>';b.hidden=false;document.getElementById('pdfv').onclick=function(){var f=document.getElementById('pdff');if(f){f.remove();this.textContent='View online';return;}f=document.createElement('iframe');f.id='pdff';f.className='pdff';f.title='Program';f.src=u;b.appendChild(f);this.textContent='Hide';};}
 
+function hvideo(u,pos){if(PAGE!=='index'||EDIT||!u||!/^https:\/\//.test(u))return;var secs=document.querySelectorAll('main>section');if(!secs.length)return;var k=Math.max(0,Math.min(secs.length,typeof pos==='number'?pos:1));var s=document.createElement('section');s.setAttribute('data-nocms','');s.style.cssText='padding:30px 22px';var v=document.createElement('video');v.controls=true;v.preload='metadata';v.setAttribute('playsinline','');v.src=u;v.style.cssText='display:block;width:100%;max-width:1000px;max-height:78vh;margin:0 auto;border-radius:18px;background:#000;box-shadow:0 14px 34px rgba(20,48,95,.18)';s.appendChild(v);if(k===0)secs[0].parentNode.insertBefore(s,secs[0]);else secs[k-1].parentNode.insertBefore(s,secs[k-1].nextSibling);}
+
 /* ---- boot ---- */
 css();setTimeout(counters,1200);
 var needPosts=!!(document.getElementById('posts')||document.getElementById('latest'));
@@ -137,7 +139,7 @@ Promise.all([
   var S={};r[0].forEach(function(x){S[x.key]=x.value;});
   try{if(S.loader_logo&&/^https:\/\//.test(S.loader_logo))localStorage.setItem('ontic_ll',S.loader_logo);else localStorage.removeItem('ontic_ll');}catch(e){}
   applyText(r[1]||[]);
-  posts(r[2]||[]);pdf(S.program_pdf);
+  posts(r[2]||[]);pdf(S.program_pdf);hvideo(S.home_video,S.home_video_pos);
   if(EDIT)editMode();
   else butterflies(S.butterflies!==false);
   window.__onticReady=true;
