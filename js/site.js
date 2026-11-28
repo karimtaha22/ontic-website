@@ -48,7 +48,7 @@ function leaves(){
       if(SKIP[c.tagName.toUpperCase()]||c.id==='pl'||c.closest('[data-nocms]'))continue;
       var inline=Array.prototype.every.call(c.children,function(k){return INL[k.tagName]&&!k.querySelector('img,[id]');});
       var txt=c.textContent.trim();
-      if(inline&&txt&&/[A-Za-zÃÂ-ÃÂ¿]/.test(txt)&&!c.id&&!c.closest('.cd,.lb'))out.push(c);
+      if(inline&&txt&&/[A-Za-zØ-Û¿]/.test(txt)&&!c.id&&!c.closest('.cd,.lb'))out.push(c);
       else walk(c);
     }
   })(document.body);
