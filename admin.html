@@ -29,43 +29,43 @@ iframe{width:100%;height:72vh;border:1px solid var(--line);border-radius:10px;ma
 [hidden]{display:none!important}
 </style></head><body>
 
-<div id="login" class="login"><h1>دخول لوحة تحكم ONTiC</h1>
-<form id="lf"><label>الإيميل أو رقم الموبايل</label><input type="text" id="em" autocomplete="username" required>
-<label>كلمة السر</label><input type="password" id="pw" autocomplete="current-password" required>
-<div style="margin-top:14px"><button class="btn" type="submit">دخول</button></div><div class="msg err" id="lm"></div></form></div>
+<div id="login" class="login"><h1>Ø¯Ø®ÙÙ ÙÙØ­Ø© ØªØ­ÙÙ ONTiC</h1>
+<form id="lf"><label>Ø§ÙØ¥ÙÙÙÙ Ø£Ù Ø±ÙÙ Ø§ÙÙÙØ¨Ø§ÙÙ</label><input type="text" id="em" autocomplete="username" required>
+<label>ÙÙÙØ© Ø§ÙØ³Ø±</label><input type="password" id="pw" autocomplete="current-password" required>
+<div style="margin-top:14px"><button class="btn" type="submit">Ø¯Ø®ÙÙ</button></div><div class="msg err" id="lm"></div></form></div>
 
 <div id="app" hidden>
-<div class="bar"><b>ONTiC &mdash; لوحة التحكم</b><span class="sp"></span><a href="./" target="_blank" style="color:#fff">فتح الموقع</a><button id="out">خروج</button></div>
-<div class="tabs"><button data-t="pages" class="on">تعديل الصفحات</button><button data-t="posts">البوستات</button><button data-t="gal">الجاليري</button><button data-t="vid">الفيديو</button><button data-t="set">الإعدادات</button></div>
+<div class="bar"><b>ONTiC &mdash; ÙÙØ­Ø© Ø§ÙØªØ­ÙÙ</b><span class="sp"></span><a href="./" target="_blank" style="color:#fff">ÙØªØ­ Ø§ÙÙÙÙØ¹</a><button id="out">Ø®Ø±ÙØ¬</button></div>
+<div class="tabs"><button data-t="pages" class="on">ØªØ¹Ø¯ÙÙ Ø§ÙØµÙØ­Ø§Øª</button><button data-t="posts">Ø§ÙØ¨ÙØ³ØªØ§Øª</button><button data-t="gal">Ø§ÙØ¬Ø§ÙÙØ±Ù</button><button data-t="vid">Ø§ÙÙÙØ¯ÙÙ</button><button data-t="set">Ø§ÙØ¥Ø¹Ø¯Ø§Ø¯Ø§Øª</button></div>
 
 <div class="pane" id="p-pages">
-<div class="note">اختار الصفحة، وبعدين دوس على أي نص جواها وعدّله مباشرة، والحفظ بيتم تلقائي أول ما تطلع من المربع. ودوس على أي صورة (إطار أحمر) عشان تغيّرها. الأرقام العدّادة والروابط ما بتتعدلش من هنا.</div>
-<div class="row" style="margin-top:12px"><select id="pg" style="max-width:260px"></select><button class="btn gray" id="reload">تحديث المعاينة</button><button class="btn" id="togal" type="button" hidden>إدارة صور الجاليري</button><button class="btn red" id="reset">استرجاع الصفحة للأصل</button><span class="msg" id="pm"></span></div>
+<div class="note">Ø§Ø®ØªØ§Ø± Ø§ÙØµÙØ­Ø©Ø ÙØ¨Ø¹Ø¯ÙÙ Ø¯ÙØ³ Ø¹ÙÙ Ø£Ù ÙØµ Ø¬ÙØ§ÙØ§ ÙØ¹Ø¯ÙÙÙ ÙØ¨Ø§Ø´Ø±Ø©Ø ÙØ§ÙØ­ÙØ¸ Ø¨ÙØªÙ ØªÙÙØ§Ø¦Ù Ø£ÙÙ ÙØ§ ØªØ·ÙØ¹ ÙÙ Ø§ÙÙØ±Ø¨Ø¹. ÙØ¯ÙØ³ Ø¹ÙÙ Ø£Ù ØµÙØ±Ø© (Ø¥Ø·Ø§Ø± Ø£Ø­ÙØ±) Ø¹Ø´Ø§Ù ØªØºÙÙØ±ÙØ§. Ø§ÙØ£Ø±ÙØ§Ù Ø§ÙØ¹Ø¯ÙØ§Ø¯Ø© ÙØ§ÙØ±ÙØ§Ø¨Ø· ÙØ§ Ø¨ØªØªØ¹Ø¯ÙØ´ ÙÙ ÙÙØ§.</div>
+<div class="row" style="margin-top:12px"><select id="pg" style="max-width:260px"></select><button class="btn gray" id="reload">ØªØ­Ø¯ÙØ« Ø§ÙÙØ¹Ø§ÙÙØ©</button><button class="btn" id="togal" type="button" hidden>Ø¥Ø¯Ø§Ø±Ø© ØµÙØ± Ø§ÙØ¬Ø§ÙÙØ±Ù</button><button class="btn red" id="reset">Ø§Ø³ØªØ±Ø¬Ø§Ø¹ Ø§ÙØµÙØ­Ø© ÙÙØ£ØµÙ</button><span class="msg" id="pm"></span></div>
 <iframe id="fr" title="preview"></iframe>
 <input type="file" id="imgf" accept="image/*" hidden>
 </div>
 
 <div class="pane" id="p-posts" hidden><div class="grid">
-<div><h3 style="margin-top:0">كل البوستات</h3><div id="plist"></div></div>
-<div><h3 style="margin-top:0" id="pft">بوست جديد</h3>
-<label>العنوان</label><input type="text" id="pt">
-<label>النص</label><textarea id="pb"></textarea>
-<label>صورة (اختياري)</label><div class="row"><input type="file" id="pimgf" accept="image/*"><button class="btn gray" id="pimgx" type="button">شيل الصورة</button></div>
+<div><h3 style="margin-top:0">ÙÙ Ø§ÙØ¨ÙØ³ØªØ§Øª</h3><div id="plist"></div></div>
+<div><h3 style="margin-top:0" id="pft">Ø¨ÙØ³Øª Ø¬Ø¯ÙØ¯</h3>
+<label>Ø§ÙØ¹ÙÙØ§Ù</label><input type="text" id="pt">
+<label>Ø§ÙÙØµ</label><textarea id="pb"></textarea>
+<label>ØµÙØ±Ø© (Ø§Ø®ØªÙØ§Ø±Ù)</label><div class="row"><input type="file" id="pimgf" accept="image/*"><button class="btn gray" id="pimgx" type="button">Ø´ÙÙ Ø§ÙØµÙØ±Ø©</button></div>
 <img id="pimgp" class="prev" hidden alt="">
-<label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="pp" checked> منشور (ظاهر في الموقع)</label>
-<div class="row" style="margin-top:12px"><button class="btn" id="psave">حفظ البوست</button><button class="btn gray" id="pnew">بوست جديد</button></div><div class="msg" id="pmsg"></div>
+<label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="pp" checked> ÙÙØ´ÙØ± (Ø¸Ø§ÙØ± ÙÙ Ø§ÙÙÙÙØ¹)</label>
+<div class="row" style="margin-top:12px"><button class="btn" id="psave">Ø­ÙØ¸ Ø§ÙØ¨ÙØ³Øª</button><button class="btn gray" id="pnew">Ø¨ÙØ³Øª Ø¬Ø¯ÙØ¯</button></div><div class="msg" id="pmsg"></div>
 </div></div></div>
 
-<div class="pane" id="p-gal" hidden><h3 style="margin-top:0">صور الجاليري (بتظهر في السلايدر وفي الشبكة)</h3><div class="row"><input type="file" id="gf" accept="image/*" multiple><button class="btn" id="gup" type="button">رفع الصور</button></div><div class="msg" id="gm"></div><div id="glist" class="ggrid"></div></div>
-<div class="pane" id="p-vid" hidden><h3 style="margin-top:0">فيديو الصفحة الرئيسية</h3><div class="note">ارفع فيديو MP4 (الأفضل أقل من 50 ميجا). بيظهر في الصفحة الرئيسية، وتقدر تطلعه أو تنزله بالأسهم.</div><div class="row" style="margin-top:10px"><input type="file" id="vf" accept="video/*"><button class="btn gray" id="vx" type="button">شيل الفيديو</button></div><div id="vs" class="note"></div><h3>الكابشن (النص تحت الفيديو)</h3><div class="row"><input type="text" id="vcap" placeholder="اكتب الكابشن هنا" style="flex:1;min-width:220px"><button class="btn" id="vcs" type="button">حفظ الكابشن</button></div><video id="vp" controls playsinline style="max-width:420px;width:100%;margin-top:10px;border-radius:12px" hidden></video><h3>مكان الفيديو في الصفحة</h3><div class="row"><button class="btn" id="vup" type="button">▲ اطلع</button><button class="btn" id="vdn" type="button">▼ انزل</button><b id="vpos"></b></div></div>
+<div class="pane" id="p-gal" hidden><h3 style="margin-top:0">ØµÙØ± Ø§ÙØ¬Ø§ÙÙØ±Ù (Ø¨ØªØ¸ÙØ± ÙÙ Ø§ÙØ³ÙØ§ÙØ¯Ø± ÙÙÙ Ø§ÙØ´Ø¨ÙØ©)</h3><div class="row"><input type="file" id="gf" accept="image/*" multiple><button class="btn" id="gup" type="button">Ø±ÙØ¹ Ø§ÙØµÙØ±</button></div><div class="msg" id="gm"></div><div id="glist" class="ggrid"></div></div>
+<div class="pane" id="p-vid" hidden><h3 style="margin-top:0">ÙÙØ¯ÙÙÙØ§Øª Ø§ÙØµÙØ­Ø© Ø§ÙØ±Ø¦ÙØ³ÙØ©</h3><div class="note">ØªÙØ¯Ø± ØªØ±ÙØ¹ Ø£ÙØªØ± ÙÙ ÙÙØ¯ÙÙ MP4 (Ø§ÙØ£ÙØ¶Ù Ø£ÙÙ ÙÙ 50 ÙÙØ¬Ø§ ÙÙÙ ÙÙØ¯ÙÙ)Ø ÙÙÙ ÙÙØ¯ÙÙ ÙÙ ÙØ§Ø¨Ø´Ù ÙÙÙØµÙ.</div><div id="vlist"></div><div class="row" style="margin-top:10px"><input type="file" id="vf" accept="video/*"><span class="note" id="vs"></span></div><h3>Ø´ÙÙ Ø§ÙØ¹Ø±Ø¶ ÙÙ Ø£ÙØªØ± ÙÙ ÙÙØ¯ÙÙ</h3><div class="row"><label style="display:flex;gap:6px;align-items:center"><input type="radio" name="vlay" value="col"> ØªØ­Øª Ø¨Ø¹Ø¶</label><label style="display:flex;gap:6px;align-items:center"><input type="radio" name="vlay" value="row"> Ø¬ÙØ¨ Ø¨Ø¹Ø¶</label></div><h3>ÙÙØ§Ù Ø§ÙÙÙØ¯ÙÙÙØ§Øª ÙÙ Ø§ÙØµÙØ­Ø©</h3><div class="row"><button class="btn" id="vup" type="button">â² Ø§Ø·ÙØ¹</button><button class="btn" id="vdn" type="button">â¼ Ø§ÙØ²Ù</button><b id="vpos"></b></div></div>
 <div class="pane" id="p-set" hidden>
-<h3 style="margin-top:0">الفراشات</h3>
-<label style="display:flex;gap:8px;align-items:center;font-size:1.05rem"><input type="checkbox" id="bf"> تشغيل الفراشات الطايرة على الموقع</label>
-<h3>لوجو شاشة التحميل</h3>
-<div class="note">الشاشة اللي بتظهر لحظات أول ما الموقع يفتح. الافتراضي لوجو ONTiC. ممكن ترفع لوجو تاني (PNG شفاف أفضل).</div>
-<div class="row" style="margin-top:10px"><input type="file" id="llf" accept="image/*"><button class="btn gray" id="llx">رجّع الافتراضي</button></div>
+<h3 style="margin-top:0">Ø§ÙÙØ±Ø§Ø´Ø§Øª</h3>
+<label style="display:flex;gap:8px;align-items:center;font-size:1.05rem"><input type="checkbox" id="bf"> ØªØ´ØºÙÙ Ø§ÙÙØ±Ø§Ø´Ø§Øª Ø§ÙØ·Ø§ÙØ±Ø© Ø¹ÙÙ Ø§ÙÙÙÙØ¹</label>
+<h3>ÙÙØ¬Ù Ø´Ø§Ø´Ø© Ø§ÙØªØ­ÙÙÙ</h3>
+<div class="note">Ø§ÙØ´Ø§Ø´Ø© Ø§ÙÙÙ Ø¨ØªØ¸ÙØ± ÙØ­Ø¸Ø§Øª Ø£ÙÙ ÙØ§ Ø§ÙÙÙÙØ¹ ÙÙØªØ­. Ø§ÙØ§ÙØªØ±Ø§Ø¶Ù ÙÙØ¬Ù ONTiC. ÙÙÙÙ ØªØ±ÙØ¹ ÙÙØ¬Ù ØªØ§ÙÙ (PNG Ø´ÙØ§Ù Ø£ÙØ¶Ù).</div>
+<div class="row" style="margin-top:10px"><input type="file" id="llf" accept="image/*"><button class="btn gray" id="llx">Ø±Ø¬ÙØ¹ Ø§ÙØ§ÙØªØ±Ø§Ø¶Ù</button></div>
 <img id="llp" class="prev" alt="" hidden>
-<h3>برنامج المؤتمر (PDF)</h3><div class="note">بيظهر في صفحة Program بزرار تحميل وزرار عرض أونلاين.</div><div class="row" style="margin-top:10px"><input type="file" id="ppf" accept="application/pdf,.pdf"><button class="btn gray" id="ppx" type="button">شيل الملف</button></div><div id="ppl" class="note"></div>
+<h3>Ø¨Ø±ÙØ§ÙØ¬ Ø§ÙÙØ¤ØªÙØ± (PDF)</h3><div class="note">Ø¨ÙØ¸ÙØ± ÙÙ ØµÙØ­Ø© Program Ø¨Ø²Ø±Ø§Ø± ØªØ­ÙÙÙ ÙØ²Ø±Ø§Ø± Ø¹Ø±Ø¶ Ø£ÙÙÙØ§ÙÙ.</div><div class="row" style="margin-top:10px"><input type="file" id="ppf" accept="application/pdf,.pdf"><button class="btn gray" id="ppx" type="button">Ø´ÙÙ Ø§ÙÙÙÙ</button></div><div id="ppl" class="note"></div>
 <div class="msg" id="sm"></div>
 </div>
 </div>
@@ -78,18 +78,18 @@ var sb=window.supabase.createClient(URL_,KEY);
 var $=function(i){return document.getElementById(i)};
 function toast(t,bad){var e=$('toast');e.textContent=t;e.style.background=bad?'#c8222b':'#14305f';e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(function(){e.classList.remove('on')},2200);}
 function toEmail(v){v=(v||'').trim();if(v.indexOf('@')>-1)return v;var d=v.replace(/\D/g,'');return 'staff-'+d+'@staff.ideaeg.online';}
-var PAGES=[['index','الرئيسية'],['about','About'],['program','Program'],['speakers','Speakers'],['venue','Venue & Travel'],['partners','Partners'],['gallery','Gallery'],['news','News'],['contact','Contact']];
+var PAGES=[['index','Ø§ÙØ±Ø¦ÙØ³ÙØ©'],['about','About'],['program','Program'],['speakers','Speakers'],['venue','Venue & Travel'],['partners','Partners'],['gallery','Gallery'],['news','News'],['contact','Contact']];
 
 async function enter(){
   var u=(await sb.auth.getUser()).data.user;
   if(!u){$('login').hidden=false;$('app').hidden=true;return;}
   var a=await sb.rpc('is_admin');
-  if(!a.data){await sb.auth.signOut();$('lm').textContent='الحساب ده مش أدمن';$('login').hidden=false;$('app').hidden=true;return;}
+  if(!a.data){await sb.auth.signOut();$('lm').textContent='Ø§ÙØ­Ø³Ø§Ø¨ Ø¯Ù ÙØ´ Ø£Ø¯ÙÙ';$('login').hidden=false;$('app').hidden=true;return;}
   $('login').hidden=true;$('app').hidden=false;init();
 }
 $('lf').onsubmit=async function(e){e.preventDefault();$('lm').textContent='';
   var r=await sb.auth.signInWithPassword({email:toEmail($('em').value),password:$('pw').value});
-  if(r.error){$('lm').textContent='بيانات الدخول غلط';return;}enter();};
+  if(r.error){$('lm').textContent='Ø¨ÙØ§ÙØ§Øª Ø§ÙØ¯Ø®ÙÙ ØºÙØ·';return;}enter();};
 $('out').onclick=async function(){await sb.auth.signOut();location.reload();};
 
 var inited=false;
@@ -123,22 +123,22 @@ window.addEventListener('message',async function(e){
     var r=m.val==null
       ?await sb.from('ontic_text').delete().eq('page',m.page).eq('orig',m.orig)
       :await sb.from('ontic_text').upsert({page:m.page,orig:m.orig,val:m.val,kind:'text',updated_at:new Date().toISOString()});
-    if(r.error)toast('فشل الحفظ: '+r.error.message,true);else toast('تم الحفظ ✓');
+    if(r.error)toast('ÙØ´Ù Ø§ÙØ­ÙØ¸: '+r.error.message,true);else toast('ØªÙ Ø§ÙØ­ÙØ¸ â');
   }
   if(m.t==='img'){pendingImg=m;$('imgf').value='';$('imgf').click();}
 });
 $('imgf').onchange=async function(){
   var f=this.files[0];if(!f||!pendingImg)return;var m=pendingImg;pendingImg=null;
-  try{toast('جاري رفع الصورة...');var url=await upload(f);
+  try{toast('Ø¬Ø§Ø±Ù Ø±ÙØ¹ Ø§ÙØµÙØ±Ø©...');var url=await upload(f);
     var r=await sb.from('ontic_text').upsert({page:m.page,orig:m.orig,val:url,kind:'img',updated_at:new Date().toISOString()});
     if(r.error)throw r.error;
-    $('fr').contentWindow.postMessage({ontic:1,page:m.page,t:'setimg',orig:m.orig,url:url},'*');toast('تم تغيير الصورة ✓');
-  }catch(err){toast('فشل: '+(err.message||err),true);}
+    $('fr').contentWindow.postMessage({ontic:1,page:m.page,t:'setimg',orig:m.orig,url:url},'*');toast('ØªÙ ØªØºÙÙØ± Ø§ÙØµÙØ±Ø© â');
+  }catch(err){toast('ÙØ´Ù: '+(err.message||err),true);}
 };
 $('reset').onclick=async function(){
-  if(!confirm('تمسح كل التعديلات على الصفحة دي وترجّعها للأصل؟'))return;
+  if(!confirm('ØªÙØ³Ø­ ÙÙ Ø§ÙØªØ¹Ø¯ÙÙØ§Øª Ø¹ÙÙ Ø§ÙØµÙØ­Ø© Ø¯Ù ÙØªØ±Ø¬ÙØ¹ÙØ§ ÙÙØ£ØµÙØ'))return;
   var r=await sb.from('ontic_text').delete().eq('page',curPage());
-  if(r.error)toast('فشل: '+r.error.message,true);else{toast('اترجعت للأصل');loadFrame();}
+  if(r.error)toast('ÙØ´Ù: '+r.error.message,true);else{toast('Ø§ØªØ±Ø¬Ø¹Øª ÙÙØ£ØµÙ');loadFrame();}
 };
 
 /* ---------- posts ---------- */
@@ -148,49 +148,65 @@ async function loadPosts(){
   var r=await sb.from('ontic_posts').select('*').order('created_at',{ascending:false});
   P=r.data||[];
   $('plist').innerHTML=P.length?P.map(function(p){return '<div class="post">'+(p.image_url?'<img src="'+p.image_url+'" alt="">':'<img alt="">')+
-   '<div class="t"><b></b><small>'+fmt(p.created_at)+' <span class="tag'+(p.published?'':' off')+'">'+(p.published?'منشور':'مخفي')+'</span></small></div>'+
-   '<button class="btn gray" data-e="'+p.id+'">تعديل</button><button class="btn red" data-d="'+p.id+'">حذف</button></div>';}).join(''):'<div class="note">مفيش بوستات لسه.</div>';
+   '<div class="t"><b></b><small>'+fmt(p.created_at)+' <span class="tag'+(p.published?'':' off')+'">'+(p.published?'ÙÙØ´ÙØ±':'ÙØ®ÙÙ')+'</span></small></div>'+
+   '<button class="btn gray" data-e="'+p.id+'">ØªØ¹Ø¯ÙÙ</button><button class="btn red" data-d="'+p.id+'">Ø­Ø°Ù</button></div>';}).join(''):'<div class="note">ÙÙÙØ´ Ø¨ÙØ³ØªØ§Øª ÙØ³Ù.</div>';
   var bs=document.querySelectorAll('#plist .post .t b');P.forEach(function(p,i){bs[i].textContent=p.title;});
   document.querySelectorAll('[data-e]').forEach(function(b){b.onclick=function(){editPost(+b.dataset.e)}});
   document.querySelectorAll('[data-d]').forEach(function(b){b.onclick=async function(){
-    if(!confirm('تحذف البوست ده نهائي؟'))return;
+    if(!confirm('ØªØ­Ø°Ù Ø§ÙØ¨ÙØ³Øª Ø¯Ù ÙÙØ§Ø¦ÙØ'))return;
     var r=await sb.from('ontic_posts').delete().eq('id',+b.dataset.d);
-    if(r.error)toast('فشل: '+r.error.message,true);else{toast('اتحذف');if(editing===+b.dataset.d)newPost();loadPosts();}};});
+    if(r.error)toast('ÙØ´Ù: '+r.error.message,true);else{toast('Ø§ØªØ­Ø°Ù');if(editing===+b.dataset.d)newPost();loadPosts();}};});
 }
 function showImg(){var i=$('pimgp');if(pimg){i.src=pimg;i.hidden=false;}else i.hidden=true;}
-function newPost(){editing=null;pimg=null;$('pft').textContent='بوست جديد';$('pt').value='';$('pb').value='';$('pp').checked=true;$('pimgf').value='';$('pmsg').textContent='';showImg();}
-function editPost(id){var p=P.filter(function(x){return x.id===id})[0];if(!p)return;editing=id;pimg=p.image_url||null;$('pft').textContent='تعديل بوست';$('pt').value=p.title;$('pb').value=p.body;$('pp').checked=p.published;$('pimgf').value='';showImg();window.scrollTo(0,0);}
+function newPost(){editing=null;pimg=null;$('pft').textContent='Ø¨ÙØ³Øª Ø¬Ø¯ÙØ¯';$('pt').value='';$('pb').value='';$('pp').checked=true;$('pimgf').value='';$('pmsg').textContent='';showImg();}
+function editPost(id){var p=P.filter(function(x){return x.id===id})[0];if(!p)return;editing=id;pimg=p.image_url||null;$('pft').textContent='ØªØ¹Ø¯ÙÙ Ø¨ÙØ³Øª';$('pt').value=p.title;$('pb').value=p.body;$('pp').checked=p.published;$('pimgf').value='';showImg();window.scrollTo(0,0);}
 $('pnew').onclick=newPost;
 $('pimgx').onclick=function(){pimg=null;$('pimgf').value='';showImg();};
-$('pimgf').onchange=async function(){var f=this.files[0];if(!f)return;try{toast('جاري رفع الصورة...');pimg=await upload(f);showImg();toast('تم رفع الصورة ✓');}catch(e){toast('فشل: '+(e.message||e),true);}};
+$('pimgf').onchange=async function(){var f=this.files[0];if(!f)return;try{toast('Ø¬Ø§Ø±Ù Ø±ÙØ¹ Ø§ÙØµÙØ±Ø©...');pimg=await upload(f);showImg();toast('ØªÙ Ø±ÙØ¹ Ø§ÙØµÙØ±Ø© â');}catch(e){toast('ÙØ´Ù: '+(e.message||e),true);}};
 $('psave').onclick=async function(){
-  var t=$('pt').value.trim();if(!t){$('pmsg').className='msg err';$('pmsg').textContent='اكتب العنوان';return;}
+  var t=$('pt').value.trim();if(!t){$('pmsg').className='msg err';$('pmsg').textContent='Ø§ÙØªØ¨ Ø§ÙØ¹ÙÙØ§Ù';return;}
   var row={title:t,body:$('pb').value,image_url:pimg,published:$('pp').checked};
   var r=editing?await sb.from('ontic_posts').update(row).eq('id',editing):await sb.from('ontic_posts').insert(row);
-  if(r.error){$('pmsg').className='msg err';$('pmsg').textContent='فشل: '+r.error.message;return;}
-  toast('تم حفظ البوست ✓');newPost();loadPosts();
+  if(r.error){$('pmsg').className='msg err';$('pmsg').textContent='ÙØ´Ù: '+r.error.message;return;}
+  toast('ØªÙ Ø­ÙØ¸ Ø§ÙØ¨ÙØ³Øª â');newPost();loadPosts();
 };
 
 /* ---------- gallery ---------- */
 async function loadGal(){
   var r=await sb.from('ontic_gallery').select('*').order('created_at',{ascending:false});var L=r.data||[];
-  $('glist').innerHTML=L.length?L.map(function(x){return '<div class="gc"><img src="'+x.image_url+'" alt=""><button class="btn red" data-gd="'+x.id+'">حذف</button></div>'}).join(''):'<div class="note">مفيش صور مرفوعة لسه (الصور الأصلية للموقع هتفضل موجودة).</div>';
-  document.querySelectorAll('[data-gd]').forEach(function(b){b.onclick=async function(){if(!confirm('تحذف الصورة دي؟'))return;var d=await sb.from('ontic_gallery').delete().eq('id',+b.dataset.gd);if(d.error)toast('فشل: '+d.error.message,true);else{toast('اتحذفت');loadGal();}};});
+  $('glist').innerHTML=L.length?L.map(function(x){return '<div class="gc"><img src="'+x.image_url+'" alt=""><button class="btn red" data-gd="'+x.id+'">Ø­Ø°Ù</button></div>'}).join(''):'<div class="note">ÙÙÙØ´ ØµÙØ± ÙØ±ÙÙØ¹Ø© ÙØ³Ù (Ø§ÙØµÙØ± Ø§ÙØ£ØµÙÙØ© ÙÙÙÙÙØ¹ ÙØªÙØ¶Ù ÙÙØ¬ÙØ¯Ø©).</div>';
+  document.querySelectorAll('[data-gd]').forEach(function(b){b.onclick=async function(){if(!confirm('ØªØ­Ø°Ù Ø§ÙØµÙØ±Ø© Ø¯ÙØ'))return;var d=await sb.from('ontic_gallery').delete().eq('id',+b.dataset.gd);if(d.error)toast('ÙØ´Ù: '+d.error.message,true);else{toast('Ø§ØªØ­Ø°ÙØª');loadGal();}};});
 }
 $('gup').onclick=async function(){
-  var fs=[].slice.call($('gf').files);if(!fs.length){toast('اختار صور الأول',true);return;}
-  try{var n=0;for(var f of fs){$('gm').textContent='جاري رفع '+(++n)+' من '+fs.length+'...';var u=await upload(f);var r=await sb.from('ontic_gallery').insert({image_url:u});if(r.error)throw r.error;}
-    $('gm').textContent='';$('gf').value='';toast('تم رفع '+fs.length+' صورة ✓');loadGal();
-  }catch(e){$('gm').textContent='';toast('فشل: '+(e.message||e),true);}
+  var fs=[].slice.call($('gf').files);if(!fs.length){toast('Ø§Ø®ØªØ§Ø± ØµÙØ± Ø§ÙØ£ÙÙ',true);return;}
+  try{var n=0;for(var f of fs){$('gm').textContent='Ø¬Ø§Ø±Ù Ø±ÙØ¹ '+(++n)+' ÙÙ '+fs.length+'...';var u=await upload(f);var r=await sb.from('ontic_gallery').insert({image_url:u});if(r.error)throw r.error;}
+    $('gm').textContent='';$('gf').value='';toast('ØªÙ Ø±ÙØ¹ '+fs.length+' ØµÙØ±Ø© â');loadGal();
+  }catch(e){$('gm').textContent='';toast('ÙØ´Ù: '+(e.message||e),true);}
 };
 
-/* ---------- home video ---------- */
-var VSL=['في أول الصفحة (فوق كل حاجة)','بعد الصورة والعدادات (القسم الرئيسي)','بعد About','بعد Program','بعد Why attend','بعد Venue','بعد Organizers','بعد الجاليري (Moments)','في آخر الصفحة (بعد Join us)'],vurl='',vpos=1;
-function vshow(){$('vpos').textContent=VSL[vpos]||'';if(vurl){$('vp').src=vurl;$('vp').hidden=false;$('vs').textContent='';}else{$('vp').removeAttribute('src');$('vp').hidden=true;$('vs').textContent='مفيش فيديو مرفوع.';}}
-$('vf').onchange=async function(){var f=this.files[0];if(!f)return;try{toast('جاري رفع الفيديو...');var u=await upload(f);var r=await setKey('home_video',u);if(r.error)throw r.error;toast('تم رفع الفيديو ✓');this.value='';loadSettings();}catch(e){toast('فشل: '+(e.message||e),true);}};
-$('vx').onclick=async function(){var r=await setKey('home_video','');if(r.error)toast('فشل',true);else{toast('اتشال الفيديو');loadSettings();}};
-async function vmove(d){var n=Math.min(8,Math.max(0,vpos+d));if(n===vpos)return;var r=await setKey('home_video_pos',n);if(r.error){toast('فشل',true);return;}vpos=n;vshow();toast('اتغير مكان الفيديو ✓');}
-$('vcs').onclick=async function(){var r=await setKey('home_video_caption',$('vcap').value.trim());if(r.error)toast('فشل',true);else toast('اتحفظ الكابشن ✓');};
+/* ---------- home videos ---------- */
+var VSL=['ÙÙ Ø£ÙÙ Ø§ÙØµÙØ­Ø© (ÙÙÙ ÙÙ Ø­Ø§Ø¬Ø©)','Ø¨Ø¹Ø¯ Ø§ÙØµÙØ±Ø© ÙØ§ÙØ¹Ø¯Ø§Ø¯Ø§Øª (Ø§ÙÙØ³Ù Ø§ÙØ±Ø¦ÙØ³Ù)','Ø¨Ø¹Ø¯ About','Ø¨Ø¹Ø¯ Program','Ø¨Ø¹Ø¯ Why attend','Ø¨Ø¹Ø¯ Venue','Ø¨Ø¹Ø¯ Organizers','Ø¨Ø¹Ø¯ Ø§ÙØ¬Ø§ÙÙØ±Ù (Moments)','ÙÙ Ø¢Ø®Ø± Ø§ÙØµÙØ­Ø© (Ø¨Ø¹Ø¯ Join us)'],videos=[],vlayout='col',vpos=1;
+function vrender(){
+  var h='';
+  videos.forEach(function(x,i){
+    h+='<div class="row" style="align-items:flex-start;gap:10px;margin-top:10px;border:1px solid #2a3b55;padding:8px;border-radius:10px;flex-wrap:wrap">'
+      +'<video src="'+x.url+'" muted style="width:160px;max-width:100%;border-radius:8px;background:#000"></video>'
+      +'<div style="flex:1;min-width:160px"><input type="text" class="vcapi" data-i="'+i+'" placeholder="ÙØ§Ø¨Ø´Ù Ø§ÙÙÙØ¯ÙÙ Ø¯Ù" value="'+(x.caption||'').replace(/"/g,'&quot;')+'" style="width:100%"></div>'
+      +'<div style="display:flex;gap:6px"><button class="btn gray vupi" data-i="'+i+'" type="button">â²</button><button class="btn gray vdni" data-i="'+i+'" type="button">â¼</button><button class="btn gray vrmi" data-i="'+i+'" type="button">Ø´ÙÙ</button></div>'
+      +'</div>';
+  });
+  $('vlist').innerHTML=h||'<div class="note">ÙÙÙØ´ ÙÙØ¯ÙÙÙØ§Øª ÙØ±ÙÙØ¹Ø©.</div>';
+  document.querySelectorAll('.vcapi').forEach(function(el){el.onchange=function(){videos[+this.dataset.i].caption=this.value;saveVideos();};});
+  document.querySelectorAll('.vupi').forEach(function(el){el.onclick=function(){var i=+this.dataset.i;if(i>0){var t=videos[i];videos[i]=videos[i-1];videos[i-1]=t;vrender();saveVideos();}};});
+  document.querySelectorAll('.vdni').forEach(function(el){el.onclick=function(){var i=+this.dataset.i;if(i<videos.length-1){var t=videos[i];videos[i]=videos[i+1];videos[i+1]=t;vrender();saveVideos();}};});
+  document.querySelectorAll('.vrmi').forEach(function(el){el.onclick=function(){videos.splice(+this.dataset.i,1);vrender();saveVideos();};});
+  var lr=document.querySelector('input[name=vlay][value="'+vlayout+'"]');if(lr)lr.checked=true;
+  $('vpos').textContent=VSL[vpos]||'';
+}
+async function saveVideos(){var r=await setKey('home_videos',videos);if(r.error)toast('ÙØ´Ù',true);}
+$('vf').onchange=async function(){var f=this.files[0];if(!f)return;try{$('vs').textContent='Ø¬Ø§Ø±Ù Ø±ÙØ¹ Ø§ÙÙÙØ¯ÙÙ...';var u=await upload(f);videos.push({url:u,caption:''});await saveVideos();this.value='';$('vs').textContent='';vrender();toast('Ø§ØªØ¶Ø§Ù Ø§ÙÙÙØ¯ÙÙ â');}catch(e){$('vs').textContent='';toast('ÙØ´Ù: '+(e.message||e),true);}};
+document.querySelectorAll('input[name=vlay]').forEach(function(r){r.onchange=async function(){vlayout=this.value;var res=await setKey('home_video_layout',vlayout);if(res.error)toast('ÙØ´Ù',true);};});
+async function vmove(d){var n=Math.min(8,Math.max(0,vpos+d));if(n===vpos)return;var r=await setKey('home_video_pos',n);if(r.error){toast('ÙØ´Ù',true);return;}vpos=n;vrender();toast('Ø§ØªØºÙØ± ÙÙØ§Ù Ø§ÙÙÙØ¯ÙÙÙØ§Øª â');}
 $('vup').onclick=function(){vmove(-1)};$('vdn').onclick=function(){vmove(1)};
 
 /* ---------- settings ---------- */
@@ -199,15 +215,15 @@ async function loadSettings(){
   var r=await sb.from('ontic_settings').select('key,value');var S={};(r.data||[]).forEach(function(x){S[x.key]=x.value});
   $('bf').checked=S.butterflies!==false;
   if(S.loader_logo){$('llp').src=S.loader_logo;$('llp').hidden=false;}else $('llp').hidden=true;
-  vurl=S.home_video||'';$('vcap').value=S.home_video_caption||'';vpos=typeof S.home_video_pos==='number'?Math.min(8,Math.max(0,S.home_video_pos)):1;vshow();
-  var pl=$('ppl');if(S.program_pdf){pl.innerHTML='الملف الحالي: <a target="_blank" rel="noopener" href="'+S.program_pdf+'">فتح</a>';}else pl.textContent='مفيش ملف مرفوع.';
+  if(Array.isArray(S.home_videos))videos=S.home_videos;else if(S.home_video)videos=[{url:S.home_video,caption:S.home_video_caption||''}];else videos=[];vlayout=S.home_video_layout==='row'?'row':'col';vpos=typeof S.home_video_pos==='number'?Math.min(8,Math.max(0,S.home_video_pos)):1;vrender();
+  var pl=$('ppl');if(S.program_pdf){pl.innerHTML='Ø§ÙÙÙÙ Ø§ÙØ­Ø§ÙÙ: <a target="_blank" rel="noopener" href="'+S.program_pdf+'">ÙØªØ­</a>';}else pl.textContent='ÙÙÙØ´ ÙÙÙ ÙØ±ÙÙØ¹.';
 }
-$('bf').onchange=async function(){var r=await setKey('butterflies',this.checked);if(r.error)toast('فشل: '+r.error.message,true);else toast(this.checked?'الفراشات شغالة':'الفراشات اتقفلت');};
-$('llf').onchange=async function(){var f=this.files[0];if(!f)return;try{toast('جاري الرفع...');var u=await upload(f);var r=await setKey('loader_logo',u);if(r.error)throw r.error;toast('تم تغيير لوجو التحميل ✓');loadSettings();}catch(e){toast('فشل: '+(e.message||e),true);}};
-$('llx').onclick=async function(){var r=await setKey('loader_logo','');if(r.error)toast('فشل',true);else{toast('رجع الافتراضي');$('llf').value='';loadSettings();}};
+$('bf').onchange=async function(){var r=await setKey('butterflies',this.checked);if(r.error)toast('ÙØ´Ù: '+r.error.message,true);else toast(this.checked?'Ø§ÙÙØ±Ø§Ø´Ø§Øª Ø´ØºØ§ÙØ©':'Ø§ÙÙØ±Ø§Ø´Ø§Øª Ø§ØªÙÙÙØª');};
+$('llf').onchange=async function(){var f=this.files[0];if(!f)return;try{toast('Ø¬Ø§Ø±Ù Ø§ÙØ±ÙØ¹...');var u=await upload(f);var r=await setKey('loader_logo',u);if(r.error)throw r.error;toast('ØªÙ ØªØºÙÙØ± ÙÙØ¬Ù Ø§ÙØªØ­ÙÙÙ â');loadSettings();}catch(e){toast('ÙØ´Ù: '+(e.message||e),true);}};
+$('llx').onclick=async function(){var r=await setKey('loader_logo','');if(r.error)toast('ÙØ´Ù',true);else{toast('Ø±Ø¬Ø¹ Ø§ÙØ§ÙØªØ±Ø§Ø¶Ù');$('llf').value='';loadSettings();}};
 
-$('ppf').onchange=async function(){var f=this.files[0];if(!f)return;try{toast('جاري رفع البرنامج...');var u=await upload(f);var r=await setKey('program_pdf',u);if(r.error)throw r.error;toast('تم رفع البرنامج ✓');this.value='';loadSettings();}catch(e){toast('فشل: '+(e.message||e),true);}};
-$('ppx').onclick=async function(){var r=await setKey('program_pdf','');if(r.error)toast('فشل',true);else{toast('اتشال الملف');loadSettings();}};
+$('ppf').onchange=async function(){var f=this.files[0];if(!f)return;try{toast('Ø¬Ø§Ø±Ù Ø±ÙØ¹ Ø§ÙØ¨Ø±ÙØ§ÙØ¬...');var u=await upload(f);var r=await setKey('program_pdf',u);if(r.error)throw r.error;toast('ØªÙ Ø±ÙØ¹ Ø§ÙØ¨Ø±ÙØ§ÙØ¬ â');this.value='';loadSettings();}catch(e){toast('ÙØ´Ù: '+(e.message||e),true);}};
+$('ppx').onclick=async function(){var r=await setKey('program_pdf','');if(r.error)toast('ÙØ´Ù',true);else{toast('Ø§ØªØ´Ø§Ù Ø§ÙÙÙÙ');loadSettings();}};
 
 enter();
 </script></body></html>
