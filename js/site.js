@@ -48,7 +48,7 @@ function leaves(){
       if(SKIP[c.tagName.toUpperCase()]||c.id==='pl'||c.closest('[data-nocms]'))continue;
       var inline=Array.prototype.every.call(c.children,function(k){return INL[k.tagName]&&!k.querySelector('img,[id]');});
       var txt=c.textContent.trim();
-      if(inline&&txt&&/[A-Za-zØ-Û¿]/.test(txt)&&!c.id&&!c.closest('.cd,.lb'))out.push(c);
+      if(inline&&txt&&/[A-Za-zÃÂ-ÃÂ¿]/.test(txt)&&!c.id&&!c.closest('.cd,.lb'))out.push(c);
       else walk(c);
     }
   })(document.body);
@@ -76,7 +76,8 @@ function applyText(rows){
 /* ---- posts ---- */
 function card(p){
   var d='';try{d=new Date(p.created_at).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});}catch(e){}
-  var img=p.image_url&&/^https:\/\//.test(p.image_url)?'<img src="'+esc(p.image_url)+'" alt="" loading="lazy">':''(\n  var pid=p.id?String(p.id):'';
+  var img=p.image_url&&/^https:\/\//.test(p.image_url)?'<img src="'+esc(p.image_url)+'" alt="" loading="lazy">':'';
+  var pid=p.id?String(p.id):'';
   var purl=location.origin+'/news.html'+(pid?('#post-'+pid):'');
   var share='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(purl);
   return '<article class="op"'+(pid?' id="post-'+esc(pid)+'"':'')+'>'+img+'<div class="opb"><time>'+esc(d)+'</time><h3>'+esc(p.title)+'</h3><p>'+esc(p.body).replace(/\n/g,'<br>')+'</p><a class="shb" href="'+share+'" target="_blank" rel="noopener">Share on Facebook</a></div></article>';
