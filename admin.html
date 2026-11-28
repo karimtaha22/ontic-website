@@ -53,6 +53,19 @@ iframe{width:100%;height:72vh;border:1px solid var(--line);border-radius:10px;ma
 <label>صورة (اختياري)</label><div class="row"><input type="file" id="pimgf" accept="image/*"><button class="btn gray" id="pimgx" type="button">شيل الصورة</button></div>
 <img id="pimgp" class="prev" hidden alt="">
 <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="pp" checked> منشور (ظاهر في الموقع)</label>
+<label>الصفحة اللي البوست يظهر فيها</label>
+<select id="ppage">
+<option value="news">الأخبار (News)</option>
+<option value="index">الرئيسية (Home)</option>
+<option value="program">البرنامج (Program)</option>
+<option value="speakers">المتحدثين (Speakers)</option>
+<option value="venue">المكان والسفر (Venue)</option>
+<option value="partners">الشركاء (Partners)</option>
+<option value="gallery">الجاليري (Gallery)</option>
+<option value="about">عن المؤتمر (About)</option>
+<option value="contact">تواصل معنا (Contact)</option>
+</select>
+<div id="pposw" hidden><label>بعد أنهي قسم في الصفحة؟ (رقم، سيبه فاضي = آخر الصفحة)</label><input type="number" id="ppos" min="0" style="max-width:120px"></div>
 <div class="row" style="margin-top:12px"><button class="btn" id="psave">حفظ البوست</button><button class="btn gray" id="pnew">بوست جديد</button></div><div class="msg" id="pmsg"></div>
 </div></div></div>
 
@@ -62,7 +75,7 @@ iframe{width:100%;height:72vh;border:1px solid var(--line);border-radius:10px;ma
 <h3 style="margin-top:0">الفراشات</h3>
 <label style="display:flex;gap:8px;align-items:center;font-size:1.05rem"><input type="checkbox" id="bf"> تشغيل الفراشات الطايرة على الموقع</label>
 <h3>لوجو شاشة التحميل</h3>
-<div class="note">الشاشة اللي بتظهر لحظات أول ما الموقع يفتح. الافتراضي لوجو ONTiC. ممكن ترفع لوجو تاني (PNG شفاف أفضل).</div>
+<div class="note">الشاشة اللي بتظهر لحظات أول ما الموقع يفتح. الافتراضي لوجو ONTiC. ممكن ترفع لوجو انيم (PNG شفاف أفضل).</div>
 <div class="row" style="margin-top:10px"><input type="file" id="llf" accept="image/*"><button class="btn gray" id="llx">رجّع الافتراضي</button></div>
 <img id="llp" class="prev" alt="" hidden>
 <h3>برنامج المؤتمر (PDF)</h3><div class="note">بيظهر في صفحة Program بزرار تحميل وزرار عرض أونلاين.</div><div class="row" style="margin-top:10px"><input type="file" id="ppf" accept="application/pdf,.pdf"><button class="btn gray" id="ppx" type="button">شيل الملف</button></div><div id="ppl" class="note"></div>
@@ -144,11 +157,12 @@ $('reset').onclick=async function(){
 /* ---------- posts ---------- */
 var P=[],editing=null,pimg=null;
 function fmt(d){try{return new Date(d).toLocaleDateString('en-GB')}catch(e){return ''}}
+var PGN={news:'الأخبار',index:'الرئيسية',program:'البرنامج',speakers:'المتحدثين',venue:'المكان والسفر',partners:'الشركاء',gallery:'الجاليري',about:'عن المؤتمر',contact:'تواصل معنا'};
 async function loadPosts(){
   var r=await sb.from('ontic_posts').select('*').order('created_at',{ascending:false});
   P=r.data||[];
   $('plist').innerHTML=P.length?P.map(function(p){return '<div class="post">'+(p.image_url?'<img src="'+p.image_url+'" alt="">':'<img alt="">')+
-   '<div class="t"><b></b><small>'+fmt(p.created_at)+' <span class="tag'+(p.published?'':' off')+'">'+(p.published?'منشور':'مخفي')+'</span></small></div>'+
+   '<div class="t"><b></b><small>'+fmt(p.created_at)+' &middot; '+(PGN[p.page||'news']||p.page)+' <span class="tag'+(p.published?'':' off')+'">'+(p.published?'منشور':'مخفي')+'</span></small></div>'+
    '<button class="btn gray" data-e="'+p.id+'">تعديل</button><button class="btn red" data-d="'+p.id+'">حذف</button></div>';}).join(''):'<div class="note">مفيش بوستات لسه.</div>';
   var bs=document.querySelectorAll('#plist .post .t b');P.forEach(function(p,i){bs[i].textContent=p.title;});
   document.querySelectorAll('[data-e]').forEach(function(b){b.onclick=function(){editPost(+b.dataset.e)}});
@@ -158,14 +172,16 @@ async function loadPosts(){
     if(r.error)toast('فشل: '+r.error.message,true);else{toast('اتحذف');if(editing===+b.dataset.d)newPost();loadPosts();}};});
 }
 function showImg(){var i=$('pimgp');if(pimg){i.src=pimg;i.hidden=false;}else i.hidden=true;}
-function newPost(){editing=null;pimg=null;$('pft').textContent='بوست جديد';$('pt').value='';$('pb').value='';$('pp').checked=true;$('pimgf').value='';$('pmsg').textContent='';showImg();}
-function editPost(id){var p=P.filter(function(x){return x.id===id})[0];if(!p)return;editing=id;pimg=p.image_url||null;$('pft').textContent='تعديل بوست';$('pt').value=p.title;$('pb').value=p.body;$('pp').checked=p.published;$('pimgf').value='';showImg();window.scrollTo(0,0);}
+function pposToggle(){$('pposw').hidden=($('ppage').value==='index'||$('ppage').value==='news');}
+function newPost(){editing=null;pimg=null;$('pft').textContent='بوست جديد';$('pt').value='';$('pb').value='';$('pp').checked=true;$('ppage').value='news';$('ppos').value='';pposToggle();$('pimgf').value='';$('pmsg').textContent='';showImg();}
+function editPost(id){var p=P.filter(function(x){return x.id===id})[0];if(!p)return;editing=id;pimg=p.image_url||null;$('pft').textContent='تعديل بوست';$('pt').value=p.title;$('pb').value=p.body;$('pp').checked=p.published;$('ppage').value=p.page||'news';$('ppos').value=(p.position==null?'':p.position);pposToggle();$('pimgf').value='';showImg();window.scrollTo(0,0);}
 $('pnew').onclick=newPost;
+$('ppage').onchange=pposToggle;
 $('pimgx').onclick=function(){pimg=null;$('pimgf').value='';showImg();};
 $('pimgf').onchange=async function(){var f=this.files[0];if(!f)return;try{toast('جاري رفع الصورة...');pimg=await upload(f);showImg();toast('تم رفع الصورة ✓');}catch(e){toast('فشل: '+(e.message||e),true);}};
 $('psave').onclick=async function(){
   var t=$('pt').value.trim();if(!t){$('pmsg').className='msg err';$('pmsg').textContent='اكتب العنوان';return;}
-  var row={title:t,body:$('pb').value,image_url:pimg,published:$('pp').checked};
+  var row={title:t,body:$('pb').value,image_url:pimg,published:$('pp').checked,page:$('ppage').value,position:$('ppos').value===''?null:+$('ppos').value};
   var r=editing?await sb.from('ontic_posts').update(row).eq('id',editing):await sb.from('ontic_posts').insert(row);
   if(r.error){$('pmsg').className='msg err';$('pmsg').textContent='فشل: '+r.error.message;return;}
   toast('تم حفظ البوست ✓');newPost();loadPosts();
